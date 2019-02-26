@@ -41,10 +41,10 @@ const PeopleTable = function({ people, personSelected, personUnselected, sortPeo
                 </tbody>
             </table>
             <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                <div onClick={pageBackward}>
+                <div style={{ cursor: 'pointer'  }} onClick={pageBackward}>
                     &#8592; Page Backward
                 </div>
-                <div onClick={pageForward}>
+                <div style={{ cursor: 'pointer'  }} onClick={pageForward}>
                      Page Forward &#8594;
                 </div>
                 
