@@ -12,7 +12,7 @@ namespace Tech_Test
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "TechTestApi",
+                name: "DefaultApi",
                 routeTemplate: "{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );

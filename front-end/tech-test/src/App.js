@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import { getSelectedPeople, sendPersonSelectedMessage, sendPersonUnselectedMessage } from './utils/serviceWorkerMessenger'
 import PeopleTable from './components/PeopleTable'
+import UserCreationForm from './components/UserCreationForm'
+import GetPeople from './actions/getPeople'
 
 class App extends Component {
     constructor(props) {
@@ -17,22 +19,13 @@ class App extends Component {
     }
 
     componentDidMount() {
-        fetch('https://tech-test.azurewebsites.net/people', {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((response) => {
-            return response.json();
-        }).then((result) => {
-            getSelectedPeople().then((selectedPeople) => {
-                this.setState({
-                    people: result.map((person) => {
-                        person.selected = selectedPeople.find((element) => {
-                            return element.Id === person.Id;
-                        });
-                        return person;
-                    })
-                })
+        this.refreshPeople();
+    }
+
+    refreshPeople = () => {
+        GetPeople().then((people) => {
+            this.setState({
+                people: people
             });
         });
     }
@@ -50,8 +43,6 @@ class App extends Component {
     }
 
     personUnselected = (person) => {
-        console.log(this.state);
-
         sendPersonUnselectedMessage(person).then((result) => {
             let previousState  = Object.assign({}, this.state);
             let people = previousState.people;
@@ -148,17 +139,22 @@ class App extends Component {
                 <header className="App-header">
                     <div>Tech Test</div>
                 </header>
-                <PeopleTable 
-                    people={this.state.people} 
-                    personSelected={this.personSelected} 
-                    personUnselected={this.personUnselected} 
-                    sortPeople={this.sortPeople}
-                    sortByEmail={this.sortByEmail} 
-                    sortByName={this.sortByName} 
-                    sortedBy={this.state.sortedBy}
-                    sortedDescending={this.state.sortedDescending}
-                    pageForward={this.pageForward} 
-                    pageBackward={this.pageBackward} />
+                <div style={{ display: 'flex' }}>
+                    <div>
+                        <PeopleTable 
+                            people={this.state.people} 
+                            personSelected={this.personSelected} 
+                            personUnselected={this.personUnselected} 
+                            sortPeople={this.sortPeople}
+                            sortByEmail={this.sortByEmail} 
+                            sortByName={this.sortByName} 
+                            sortedBy={this.state.sortedBy}
+                            sortedDescending={this.state.sortedDescending}
+                            pageForward={this.pageForward} 
+                            pageBackward={this.pageBackward} />
+                    </div>
+                    <UserCreationForm refreshPeople={this.refreshPeople} />
+                </div>
             </div>
         );
     }

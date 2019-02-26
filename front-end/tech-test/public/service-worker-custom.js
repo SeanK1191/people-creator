@@ -6,11 +6,13 @@ let selectedPeople = [];
 // Install Service Worker
 self.addEventListener('install', function(event){
     console.log('installed!');
+    event.waitUntil(self.skipWaiting());
 });
 
 // Service Worker Active
 self.addEventListener('activate', function(event){
     console.log('activated!');
+    event.waitUntil(self.clients.claim());
 });
 
 self.addEventListener('message', function(event){

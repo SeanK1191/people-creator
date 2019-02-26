@@ -8,11 +8,14 @@ using Tech_Test.Models;
 
 namespace Tech_Test.Controllers
 {
+    [RoutePrefix("")]
     public class PeopleController : ApiController
     {
         private Tech_TestContext db = new Tech_TestContext();
 
         // GET: api/People
+        [HttpGet]
+        [Route("people")]
         public IHttpActionResult GetPeople(
             int skip = 0, 
             int take = 10,
@@ -48,6 +51,8 @@ namespace Tech_Test.Controllers
         }
 
         // GET: api/People/5
+        [HttpGet]
+        [Route("people/{id}", Name = "GetPerson")]
         [ResponseType(typeof(Person))]
         public IHttpActionResult GetPerson(int id)
         {
@@ -61,6 +66,8 @@ namespace Tech_Test.Controllers
         }
 
         // PUT: api/People/5
+        [HttpPut]
+        [Route("people")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutPerson(int id, Person person)
         {
@@ -96,6 +103,8 @@ namespace Tech_Test.Controllers
         }
 
         // POST: api/People
+        [HttpPost]
+        [Route("people")]
         [ResponseType(typeof(Person))]
         public IHttpActionResult PostPerson(Person person)
         {
@@ -107,10 +116,12 @@ namespace Tech_Test.Controllers
             db.People.Add(person);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = person.Id }, person);
+            return CreatedAtRoute("GetPerson", new { id = person.Id }, person);
         }
 
         // DELETE: api/People/5
+        [HttpDelete]
+        [Route("people")]
         [ResponseType(typeof(Person))]
         public IHttpActionResult DeletePerson(int id)
         {
