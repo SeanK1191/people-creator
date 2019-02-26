@@ -1,6 +1,9 @@
 namespace Tech_Test.Migrations
 {
+    using System;
+    using System.Collections.Generic;
     using System.Data.Entity.Migrations;
+    using System.Linq;
     using Tech_Test.Models;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Tech_Test.Models.Tech_TestContext>
@@ -14,44 +17,31 @@ namespace Tech_Test.Migrations
         {
             //  This method will be called after migrating to the latest version.
 
-            context.People.AddOrUpdate(x => x.Id,
-                new Person()
+            List<Person> people = new List<Person>();
+
+            for (int i = 1; i < 101; i++)
+            {
+                people.Add(new Person()
                 {
-                    Id = 1,
-                    Address = "Test Address 1",
-                    Age = 21,
-                    Balance = 100,
-                    Email = "testemail1@notarealemail.co.uk",
-                    Name = "Test Person 1"
-                },
-                new Person()
-                {
-                    Id = 2,
-                    Address = "Test Address 2",
-                    Age = 22,
-                    Balance = 200,
-                    Email = "testemail2@notarealemail.co.uk",
-                    Name = "Test Person 2"
-                },
-                new Person()
-                {
-                    Id = 3,
-                    Address = "Test Address 3",
-                    Age = 23,
-                    Balance = 300,
-                    Email = "testemail3@notarealemail.co.uk",
-                    Name = "Test Person 3"
-                },
-                new Person()
-                {
-                    Id = 4,
-                    Address = "Test Address 4",
-                    Age = 24,
-                    Balance = 400,
-                    Email = "testemail4@notarealemail.co.uk",
-                    Name = "Test Person 4"
-                }
-            );
+                    Id = i,
+                    Address = $"Test Address {i}",
+                    Age = 20 + i,
+                    Balance = 100 * i,
+                    Email = $"testemail-{RandomString(4)}@notarealemail.co.uk",
+                    Name = $"Test Person {RandomString(4)}"
+                });
+            }
+
+            context.People.AddOrUpdate(x => x.Id, people.ToArray());
+        }
+
+        private static Random random = new Random();
+
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            
+            return new string(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).OrderBy(c => c).ToArray());
         }
     }
 }

@@ -13,9 +13,38 @@ namespace Tech_Test.Controllers
         private Tech_TestContext db = new Tech_TestContext();
 
         // GET: api/People
-        public IQueryable<Person> GetPeople()
+        public IHttpActionResult GetPeople(
+            int skip = 0, 
+            int take = 10,
+            bool sortDescending = false,
+            string sortBy = "name")
         {
-            return db.People;
+            var people = db.People.Select(person => new PersonResponse
+            {
+                Id = person.Id,
+                Name = person.Name,
+                Address = person.Address,
+                Age = person.Age,
+                Balance = person.Balance,
+                Email = person.Email
+            });
+
+            switch (sortBy)
+            {
+                case "name":
+                    people = sortDescending ? people.OrderByDescending(person => person.Name) : people.OrderBy(person => person.Name);
+                    break;
+                case "email":
+                    people = sortDescending ? people.OrderByDescending(person => person.Email) : people.OrderBy(person => person.Email);
+                    break;
+                default:
+                    people = sortDescending ? people.OrderByDescending(person => person.Name) : people.OrderBy(person => person.Name);
+                    break;
+            }
+            
+            people = people.Skip(skip).Take(take);
+
+            return Ok(people.ToList());
         }
 
         // GET: api/People/5
@@ -96,16 +125,7 @@ namespace Tech_Test.Controllers
 
             return Ok(person);
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
+        
         private bool PersonExists(int id)
         {
             return db.People.Count(e => e.Id == id) > 0;

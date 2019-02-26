@@ -14,8 +14,6 @@ self.addEventListener('activate', function(event){
 });
 
 self.addEventListener('message', function(event){
-    console.log("SW Received Message");
-
     if(event.data.eventType === 'personSelected') {
         selectedPeople.push(event.data.person);
     }
