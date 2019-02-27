@@ -42,7 +42,7 @@ class UserCreationForm extends Component {
         };
 
         return (
-            <div>
+            <div style={{ marginTop: 50 }}>
                 <span>User Creation Form</span>
                 <div>
                     <label style={inputStyle}>

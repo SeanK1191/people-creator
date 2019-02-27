@@ -13,7 +13,7 @@ namespace Tech_Test.Controllers
     {
         private Tech_TestContext db = new Tech_TestContext();
 
-        // GET: api/People
+        // GET: people
         [HttpGet]
         [Route("people")]
         public IHttpActionResult GetPeople(
@@ -50,7 +50,7 @@ namespace Tech_Test.Controllers
             return Ok(people.ToList());
         }
 
-        // GET: api/People/5
+        // GET: people/5
         [HttpGet]
         [Route("people/{id}", Name = "GetPerson")]
         [ResponseType(typeof(Person))]
@@ -65,9 +65,9 @@ namespace Tech_Test.Controllers
             return Ok(personModel);
         }
 
-        // PUT: api/People/5
+        // PUT: people/5
         [HttpPut]
-        [Route("people")]
+        [Route("people/{id}")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutPerson(int id, Person person)
         {
@@ -102,7 +102,7 @@ namespace Tech_Test.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/People
+        // POST: people
         [HttpPost]
         [Route("people")]
         [ResponseType(typeof(Person))]
@@ -119,7 +119,7 @@ namespace Tech_Test.Controllers
             return CreatedAtRoute("GetPerson", new { id = person.Id }, person);
         }
 
-        // DELETE: api/People/5
+        // DELETE: people/5
         [HttpDelete]
         [Route("people/{id}")]
         [ResponseType(typeof(Person))]

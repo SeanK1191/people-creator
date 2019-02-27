@@ -148,6 +148,35 @@ class App extends Component {
         })
     }
 
+    updateUser = (personId) => {
+        const personToUpdate = this.state.people.find(person => person.Id === personId);
+
+        fetch(`${global.config.apiUrl}/people/${personId}`, {
+            method: 'PUT',
+            body: JSON.stringify(personToUpdate),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+    }
+
+    onTableEdited = (person, change) => {
+        this.setState((previousState) => {
+            const previousPeople = previousState.people;
+
+            let indexOfPreviousPerson = 0;
+            const previousPerson = previousPeople.find((element, index) => { 
+                indexOfPreviousPerson = index;
+                return element.Id === person.Id
+            });
+
+            const newPerson = Object.assign({}, previousPerson, change);
+            previousPeople[indexOfPreviousPerson] = newPerson;
+
+            return Object.assign({}, previousState);
+        });
+    }
+
     render() {
         return (
             <div className="App">
@@ -167,7 +196,9 @@ class App extends Component {
                             sortedDescending={this.state.sortedDescending}
                             pageForward={this.pageForward} 
                             pageBackward={this.pageBackward}
-                            deleteUser={this.deleteUser} />
+                            deleteUser={this.deleteUser}
+                            onTableEdited={this.onTableEdited}
+                            updateUser={this.updateUser} />
                     </div>
                     <UserCreationForm refreshPeople={this.refreshPeople} />
                 </div>
