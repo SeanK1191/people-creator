@@ -9,6 +9,8 @@ You can see a demo of this repo [here](https://seank1191.github.io/)
 
 ## Back End 
 
+I have published the back end to an Azure Web App for ease of use so if you don't want to run this locally you can visit [here](https://tech-test.azurewebsites.net/Help) and that should show what you can do.
+
 Back-end should be set up first.
 
 Open the Tech-Test solution in the backend folder in visual studio.
