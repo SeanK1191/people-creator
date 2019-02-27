@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 
 const PeopleTable = function({ people, personSelected, personUnselected, sortPeople, sortedBy, sortedDescending, pageForward, pageBackward, deleteUser, onTableEdited, updateUser }) {
 
@@ -55,5 +56,19 @@ const PeopleTable = function({ people, personSelected, personUnselected, sortPeo
         
     )
 }
+
+PeopleTable.propTypes = {
+    people: PropTypes.array,
+    personSelected: PropTypes.func.isRequired,
+    personUnselected: PropTypes.func.isRequired,
+    sortPeople: PropTypes.func.isRequired,
+    sortedBy: PropTypes.string.isRequired,
+    sortedDescending: PropTypes.bool.isRequired,
+    pageForward: PropTypes.func.isRequired,
+    pageBackward: PropTypes.func.isRequired,
+    deleteUser: PropTypes.func.isRequired,
+    onTableEdited: PropTypes.func.isRequired,
+    updateUser: PropTypes.func.isRequired,
+};
 
 export default PeopleTable;

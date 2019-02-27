@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class UserCreationForm extends Component {
     constructor(props) {
@@ -71,5 +72,9 @@ class UserCreationForm extends Component {
         );
     }
 }
+
+UserCreationForm.propTypes = {
+    refreshPeople: PropTypes.func.isRequired
+};
 
 export default UserCreationForm;
