@@ -121,7 +121,7 @@ namespace Tech_Test.Controllers
 
         // DELETE: api/People/5
         [HttpDelete]
-        [Route("people")]
+        [Route("people/{id}")]
         [ResponseType(typeof(Person))]
         public IHttpActionResult DeletePerson(int id)
         {

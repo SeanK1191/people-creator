@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PeopleTable = function({ people, personSelected, personUnselected, sortPeople, sortedBy, sortedDescending, pageForward, pageBackward }) {
+const PeopleTable = function({ people, personSelected, personUnselected, sortPeople, sortedBy, sortedDescending, pageForward, pageBackward, deleteUser }) {
 
     const arrow = sortedDescending === true ? <span>&#8595;</span> : <span>&#8593;</span>;
 
@@ -8,7 +8,7 @@ const PeopleTable = function({ people, personSelected, personUnselected, sortPeo
     const emailHeader = sortedBy === 'email' ? <span>Email {arrow}</span> : <span>Email</span>;
 
     return (
-        <div style={{ width: 800 }}>
+        <div style={{ width: 1000 }}>
             <table>
                 <tbody>
                     <tr>
@@ -34,6 +34,7 @@ const PeopleTable = function({ people, personSelected, personUnselected, sortPeo
                                                 <span style={{ cursor: 'pointer'  }} onClick={() => { personSelected(person)}} role='img' aria-label='Plus sign'>&#10133;</span>
                                         }
                                     </td>
+                                    <td style={{ cursor: 'pointer'  }} onClick={() => deleteUser(person.Id)}>Delete User</td>
                                 </tr>
                             )
                         })

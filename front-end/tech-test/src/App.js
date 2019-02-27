@@ -133,6 +133,15 @@ class App extends Component {
         });
     }
 
+    deleteUser = (personId) => {
+        fetch(`https://tech-test.azurewebsites.net/people/${personId}`, {
+            method: 'DELETE'
+        }).then((result) => {
+            console.log(result);
+            this.refreshPeople();
+        })
+    }
+
     render() {
         return (
             <div className="App">
@@ -151,7 +160,8 @@ class App extends Component {
                             sortedBy={this.state.sortedBy}
                             sortedDescending={this.state.sortedDescending}
                             pageForward={this.pageForward} 
-                            pageBackward={this.pageBackward} />
+                            pageBackward={this.pageBackward}
+                            deleteUser={this.deleteUser} />
                     </div>
                     <UserCreationForm refreshPeople={this.refreshPeople} />
                 </div>
