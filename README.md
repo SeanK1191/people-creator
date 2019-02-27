@@ -3,7 +3,7 @@ Small UI and API for creating People
 
 You can see a demo of this repo [here](https://seank1191.github.io/)
 
-:warning: If nothing loads please refresh the page, it's likely just the time it takes for the service worker to register.
+:warning: If nothing loads please wait a few seconds or refresh the page, it takes a small amount of time for the web app to wake up or it could mean there was a problem with service worker registration.
 
 # Running Locally
 
