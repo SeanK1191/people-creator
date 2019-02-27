@@ -50,7 +50,7 @@ class PersonCreationForm extends Component {
 
         return (
             <div style={{ marginTop: 50, marginLeft: 50 }}>
-                <span>Person Creation Form</span>
+                <span id='formTitle'>Person Creation Form</span>
                 <div>
                     <label style={inputStyle}>
                         Name:

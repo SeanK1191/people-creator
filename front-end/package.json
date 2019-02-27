@@ -4,9 +4,12 @@
   "private": true,
   "homepage": "https://seank1191.github.io/",
   "dependencies": {
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.10.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-scripts": "2.1.5",
+    "react-test-renderer": "^16.8.3",
     "react-toastify": "^4.5.2"
   },
   "scripts": {
