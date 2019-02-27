@@ -22,12 +22,18 @@ class App extends Component {
         this.refreshPeople();
     }
 
-    refreshPeople = () => {
+    refreshPeople = (refreshPage = false) => {
+        if (refreshPage === true) {
+            window.location.reload(false); 
+        }
         GetPeople().then((people) => {
             this.setState({
                 people: people
             });
-        });
+        }).catch((result) => {
+            console.log(result);
+            setTimeout(() => { this.refreshPeople(true) }, 1000);
+        });;
     }
 
     personSelected = (person) => {
@@ -77,6 +83,8 @@ class App extends Component {
                         sortedDescending: prevState.sortedBy !== sortBy ? false : sortDescending
                     }
                 });
+            }).catch((result) => {
+                console.log(result);
             });
         });
     }
@@ -118,16 +126,14 @@ class App extends Component {
             return response.json();
         }).then((result) => {
             getSelectedPeople().then((selectedPeople) => {
-                this.setState(prevState => {
-                    return {
-                        people: result.map((person) => {
-                            person.selected = selectedPeople.find((element) => {
-                                return element.Id === person.Id;
-                            });
-                            return person;
-                        }),
-                        skip: newSkip
-                    };
+                this.setState({
+                    people: result.map((person) => {
+                        person.selected = selectedPeople.find((element) => {
+                            return element.Id === person.Id;
+                        });
+                        return person;
+                    }),
+                    skip: newSkip
                 });
             });
         });
