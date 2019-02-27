@@ -16,6 +16,7 @@ class UserCreationForm extends Component {
         this.refreshPeople = props.refreshPeople;
     }
 
+    /// Create a new person and refresh the table
     createPerson = () => {
         fetch(`${global.config.apiUrl}/people`, {
             method: 'POST',
@@ -29,6 +30,7 @@ class UserCreationForm extends Component {
         })
     }
 
+    /// Handle input from user into form
     handleInput = (change) => {
         this.setState((previousState) => {
             return Object.assign({}, previousState, change);

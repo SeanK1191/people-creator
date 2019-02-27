@@ -1,3 +1,4 @@
+/// Ensure service worker is ready to be interacted with and then ask it for the cache of selected people
 export const getSelectedPeople =  function () {
     return navigator.serviceWorker.ready.then(() => {
         return new Promise(function(resolve, reject){
@@ -26,6 +27,7 @@ export const getSelectedPeople =  function () {
     });
 }
 
+/// Tell service worker a new person has been selected
 export const sendPersonSelectedMessage = function(person) {
     return new Promise(function(resolve) {
         navigator.serviceWorker.controller.postMessage({
@@ -38,6 +40,7 @@ export const sendPersonSelectedMessage = function(person) {
     
 }
 
+/// Tell service worker a person has been unselected
 export const sendPersonUnselectedMessage = function(person) {
     return new Promise(function(resolve) {
         navigator.serviceWorker.controller.postMessage({

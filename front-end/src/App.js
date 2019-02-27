@@ -22,6 +22,7 @@ class App extends Component {
         this.refreshPeople();
     }
 
+    /// This works as the initial get of all people and for refreshing the table after additions and deletions
     refreshPeople = (refreshPage = false) => {
         if (refreshPage === true) {
             window.location.reload(false); 
@@ -31,11 +32,13 @@ class App extends Component {
                 people: people
             });
         }).catch((result) => {
+            /// Service worker controller either hasn't registered yet or won't register (Hard refresh) so start over again and refresh page just to be safe 
             console.log(result);
             setTimeout(() => { this.refreshPeople(true) }, 1000);
         });;
     }
 
+    /// Component handler for marking a person as selected using utility method from serviceWorkerMessenger
     personSelected = (person) => {
         sendPersonSelectedMessage(person).then((result) => {
             let previousState  = Object.assign({}, this.state);
@@ -48,6 +51,7 @@ class App extends Component {
         })
     }
 
+    /// Component handler for marking a person as selected using utility method from serviceWorkerMessenger
     personUnselected = (person) => {
         sendPersonUnselectedMessage(person).then((result) => {
             let previousState  = Object.assign({}, this.state);
@@ -60,6 +64,7 @@ class App extends Component {
         })
     }
 
+    /// Make call to get people but with sorting parameters, use whatever skip and take were set last
     sortPeople = (sortBy) => {
         const sortDescending = this.state.sortedDescending === true ? false : true;
 
@@ -89,6 +94,7 @@ class App extends Component {
         });
     }
 
+    /// Get next 10 people
     pageForward = () => {
         const newSkip = this.state.skip + 10;
 
@@ -115,6 +121,7 @@ class App extends Component {
         });
     }
 
+    /// Get last 10 people, do not allow the user to go back from 0
     pageBackward = () => {
         const newSkip = this.state.skip === 0 ? 0 : this.state.skip - 10;
 
@@ -139,6 +146,7 @@ class App extends Component {
         });
     }
 
+    /// Delete a user and refresh the table
     deleteUser = (personId) => {
         fetch(`${global.config.apiUrl}/people/${personId}`, {
             method: 'DELETE'
@@ -148,6 +156,7 @@ class App extends Component {
         })
     }
 
+    /// Update a users details, don't refresh the table, if something goes wrong, handle it in the catch.
     updateUser = (personId) => {
         const personToUpdate = this.state.people.find(person => person.Id === personId);
 
@@ -157,9 +166,12 @@ class App extends Component {
             headers: {
                 "Content-Type": "application/json",
             }
+        }).catch((result) => {
+            console.log(result);
         });
     }
 
+    /// Handle all values in the table being edited
     onTableEdited = (person, change) => {
         this.setState((previousState) => {
             const previousPeople = previousState.people;
