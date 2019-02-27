@@ -70,9 +70,12 @@ class App extends Component {
     /// Make call to get people but with sorting parameters, use whatever skip and take were set last
     sortPeople = (sortBy) => {
         if (this.state.isSorting === false) {
-            this.setState({ isSorting: true });
+            let sortDescending = this.state.sortedDescending === true ? false : true;
+            if (this.state.sortedBy !== sortBy) {
+                sortDescending = false;
+            }
 
-            const sortDescending = this.state.sortedDescending === true ? false : true;
+            this.setState({ isSorting: true });
 
             fetch(`${global.config.apiUrl}/people?sortBy=${sortBy}&sortDescending=${sortDescending}&skip=${this.state.skip}&take=${this.state.take}`, {
                 headers: {
@@ -91,8 +94,8 @@ class App extends Component {
                                 return person;
                             }),
                             sortedBy: sortBy,
-                            sortedDescending: prevState.sortedBy !== sortBy ? false : sortDescending,
-                            isSorting: false
+                            isSorting: false,
+                            sortedDescending: sortDescending
                         }
                     });
                 }).catch((result) => {
