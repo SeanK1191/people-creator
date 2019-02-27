@@ -13,7 +13,24 @@ namespace Tech_Test.Controllers
     [RoutePrefix("")]
     public class PeopleController : ApiController
     {
-        private Tech_TestContext db = new Tech_TestContext();
+        private readonly Tech_TestContext db;
+
+        public PeopleController()
+        {
+            db = new Tech_TestContext();
+        }
+
+        public PeopleController(Tech_TestContext context = null)
+        {
+            if (context == null)
+            {
+                db = new Tech_TestContext();
+            }
+            else
+            {
+                db = context;
+            }
+        }
 
         // GET: people
         [HttpGet]
@@ -58,13 +75,13 @@ namespace Tech_Test.Controllers
         [ResponseType(typeof(Person))]
         public IHttpActionResult GetPerson(int id)
         {
-            Person personModel = db.People.Find(id);
-            if (personModel == null)
+            Person person = db.People.FirstOrDefault(x => x.Id == id);
+            if (person == null)
             {
                 return NotFound();
             }
 
-            return Ok(personModel);
+            return Ok(person);
         }
 
         // PUT: people/5

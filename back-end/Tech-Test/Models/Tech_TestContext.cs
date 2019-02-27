@@ -16,6 +16,6 @@ namespace Tech_Test.Models
 
         }
 
-        public DbSet<Person> People { get; set; }
+        public virtual DbSet<Person> People { get; set; }
     }
 }
