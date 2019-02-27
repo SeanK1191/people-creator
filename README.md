@@ -23,6 +23,8 @@ Set the database context called Tech_TestContext with your SQL connection string
 
 ```
 
+Then go to tools->NuGet Package Manager Console and run the ``Update-Database`` command.
+
 Now you can start the Tech-Test project in visual studio and it should start running the API locally at http://localhost:50753
 
 ## Front End
