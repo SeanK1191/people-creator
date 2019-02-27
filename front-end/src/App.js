@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 import { getSelectedPeople, sendPersonSelectedMessage, sendPersonUnselectedMessage } from './utils/serviceWorkerMessenger'
 import PeopleTable from './components/PeopleTable'
-import UserCreationForm from './components/UserCreationForm'
+import PersonCreationForm from './components/PersonCreationForm'
 import GetPeople from './actions/getPeople'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class App extends Component {
     constructor(props) {
@@ -152,8 +154,8 @@ class App extends Component {
         });
     }
 
-    /// Delete a user and refresh the table
-    deleteUser = (personId) => {
+    /// Delete a Person and refresh the table
+    deletePerson = (personId) => {
         fetch(`${global.config.apiUrl}/people/${personId}`, {
             method: 'DELETE'
         }).then((result) => {
@@ -162,8 +164,9 @@ class App extends Component {
         })
     }
 
-    /// Update a users details, don't refresh the table, if something goes wrong, handle it in the catch.
-    updateUser = (personId) => {
+    /// Update a Persons details, don't refresh the table, if something goes wrong, handle it in the catch.
+    updatePerson = (personId) => {
+        toast('Updating Person');
         const personToUpdate = this.state.people.find(person => person.Id === personId);
 
         fetch(`${global.config.apiUrl}/people/${personId}`, {
@@ -171,6 +174,10 @@ class App extends Component {
             body: JSON.stringify(personToUpdate),
             headers: {
                 "Content-Type": "application/json",
+            }
+        }).then((response) => {
+            if (response.status === 204) {
+                toast('Person Updated');
             }
         }).catch((result) => {
             console.log(result);
@@ -214,12 +221,13 @@ class App extends Component {
                             sortedDescending={this.state.sortedDescending}
                             pageForward={this.pageForward} 
                             pageBackward={this.pageBackward}
-                            deleteUser={this.deleteUser}
+                            deletePerson={this.deletePerson}
                             onTableEdited={this.onTableEdited}
-                            updateUser={this.updateUser} />
+                            updatePerson={this.updatePerson} />
                     </div>
-                    <UserCreationForm refreshPeople={this.refreshPeople} />
+                    <PersonCreationForm refreshPeople={this.refreshPeople} />
                 </div>
+                <ToastContainer />
             </div>
         );
     }

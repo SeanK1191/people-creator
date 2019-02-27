@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
-class UserCreationForm extends Component {
+class PersonCreationForm extends Component {
     constructor(props) {
         super(props);
 
@@ -18,6 +20,7 @@ class UserCreationForm extends Component {
 
     /// Create a new person and refresh the table
     createPerson = () => {
+        toast('Creating Person');
         fetch(`${global.config.apiUrl}/people`, {
             method: 'POST',
             body: JSON.stringify(this.state),
@@ -25,12 +28,13 @@ class UserCreationForm extends Component {
                 "Content-Type": "application/json",
             }
         }).then((result) => {
+            toast('Person Created');
             console.log(result);
             this.refreshPeople();
         })
     }
 
-    /// Handle input from user into form
+    /// Handle input from Person into form
     handleInput = (change) => {
         this.setState((previousState) => {
             return Object.assign({}, previousState, change);
@@ -46,7 +50,7 @@ class UserCreationForm extends Component {
 
         return (
             <div style={{ marginTop: 50, marginLeft: 50 }}>
-                <span>User Creation Form</span>
+                <span>Person Creation Form</span>
                 <div>
                     <label style={inputStyle}>
                         Name:
@@ -75,8 +79,8 @@ class UserCreationForm extends Component {
     }
 }
 
-UserCreationForm.propTypes = {
+PersonCreationForm.propTypes = {
     refreshPeople: PropTypes.func.isRequired
 };
 
-export default UserCreationForm;
+export default PersonCreationForm;

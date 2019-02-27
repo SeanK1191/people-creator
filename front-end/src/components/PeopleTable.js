@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 
-const PeopleTable = function({ people, personSelected, personUnselected, sortPeople, sortedBy, sortedDescending, pageForward, pageBackward, deleteUser, onTableEdited, updateUser }) {
+const PeopleTable = function({ people, personSelected, personUnselected, sortPeople, sortedBy, sortedDescending, pageForward, pageBackward, deletePerson, onTableEdited, updatePerson }) {
 
     const arrow = sortedDescending === true ? <span>&#8595;</span> : <span>&#8593;</span>;
 
@@ -35,15 +35,15 @@ const PeopleTable = function({ people, personSelected, personUnselected, sortPeo
                                                 <span style={{ cursor: 'pointer'  }} onClick={() => { personSelected(person)}} role='img' aria-label='Plus sign'>&#10133;</span>
                                         }
                                     </td>
-                                    <td style={{ cursor: 'pointer' }} onClick={() => updateUser(person.Id)}>Update User</td>
-                                    <td style={{ cursor: 'pointer' }} onClick={() => deleteUser(person.Id)}>Delete User</td>
+                                    <td><button style={{ cursor: 'pointer' }} onClick={() => updatePerson(person.Id)}>Update Person</button></td>
+                                    <td><button style={{ cursor: 'pointer' }} onClick={() => deletePerson(person.Id)}>Delete Person</button></td>
                                 </tr>
                             )
                         })
                     }
                 </tbody>
             </table>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 3 }}>
                 <button style={{ cursor: 'pointer'  }} onClick={pageBackward}>
                     &#8592; Page Backward
                 </button>
@@ -65,9 +65,9 @@ PeopleTable.propTypes = {
     sortedDescending: PropTypes.bool.isRequired,
     pageForward: PropTypes.func.isRequired,
     pageBackward: PropTypes.func.isRequired,
-    deleteUser: PropTypes.func.isRequired,
+    deletePerson: PropTypes.func.isRequired,
     onTableEdited: PropTypes.func.isRequired,
-    updateUser: PropTypes.func.isRequired,
+    updatePerson: PropTypes.func.isRequired,
 };
 
 export default PeopleTable;
