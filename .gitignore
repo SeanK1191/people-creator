@@ -265,15 +265,15 @@ __pycache__/
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/front-end/tech-test/node_modules
-/front-end/tech-test/.pnp
+/front-end/node_modules
+/front-end/.pnp
 .pnp.js
 
 # testing
-/front-end/tech-test/coverage
+/front-end/coverage
 
 # production
-/front-end/tech-test/build
+/front-end/build
 
 # misc
 .DS_Store
