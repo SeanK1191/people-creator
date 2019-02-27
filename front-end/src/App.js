@@ -14,7 +14,8 @@ class App extends Component {
             sortedBy: 'name',
             sortedDescending: false,
             skip: 0,
-            take: 10
+            take: 10,
+            isSorting: false
         }
     }
 
@@ -66,32 +67,37 @@ class App extends Component {
 
     /// Make call to get people but with sorting parameters, use whatever skip and take were set last
     sortPeople = (sortBy) => {
-        const sortDescending = this.state.sortedDescending === true ? false : true;
+        if (this.state.isSorting === false) {
+            this.setState({ isSorting: true });
 
-        fetch(`${global.config.apiUrl}/people?sortBy=${sortBy}&sortDescending=${sortDescending}&skip=${this.state.skip}&take=${this.state.take}`, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((response) => {
-            return response.json();
-        }).then((result) => {
-            getSelectedPeople().then((selectedPeople) => {
-                this.setState(prevState => {
-                    return {
-                        people: result.map((person) => {
-                            person.selected = selectedPeople.find((element) => {
-                                return element.Id === person.Id;
-                            });
-                            return person;
-                        }),
-                        sortedBy: sortBy,
-                        sortedDescending: prevState.sortedBy !== sortBy ? false : sortDescending
-                    }
+            const sortDescending = this.state.sortedDescending === true ? false : true;
+
+            fetch(`${global.config.apiUrl}/people?sortBy=${sortBy}&sortDescending=${sortDescending}&skip=${this.state.skip}&take=${this.state.take}`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => {
+                return response.json();
+            }).then((result) => {
+                getSelectedPeople().then((selectedPeople) => {
+                    this.setState(prevState => {
+                        return {
+                            people: result.map((person) => {
+                                person.selected = selectedPeople.find((element) => {
+                                    return element.Id === person.Id;
+                                });
+                                return person;
+                            }),
+                            sortedBy: sortBy,
+                            sortedDescending: prevState.sortedBy !== sortBy ? false : sortDescending,
+                            isSorting: false
+                        }
+                    });
+                }).catch((result) => {
+                    console.log(result);
                 });
-            }).catch((result) => {
-                console.log(result);
             });
-        });
+        }
     }
 
     /// Get next 10 people
@@ -195,7 +201,7 @@ class App extends Component {
                 <header className="App-header">
                     <div>Tech Test</div>
                 </header>
-                <div style={{ display: 'flex' }}>
+                <div disabled={true} style={{ display: 'flex' }}>
                     <div>
                         <PeopleTable 
                             people={this.state.people} 

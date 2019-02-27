@@ -45,7 +45,7 @@ class UserCreationForm extends Component {
         };
 
         return (
-            <div style={{ marginTop: 50 }}>
+            <div style={{ marginTop: 50, marginLeft: 50 }}>
                 <span>User Creation Form</span>
                 <div>
                     <label style={inputStyle}>
