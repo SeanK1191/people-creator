@@ -13,10 +13,10 @@ const PeopleTable = function({ people, personSelected, personUnselected, sortPeo
             <table>
                 <tbody>
                     <tr>
-                        <th style={{ cursor: 'pointer'  }} onClick={() => { sortPeople('name') }}>{nameHeader}</th>
+                        <th style={{ cursor: 'pointer', backgroundColor: 'LightGray'  }} onClick={() => { sortPeople('name') }}>{nameHeader}</th>
                         <th>Age</th>
                         <th>Balance</th>
-                        <th style={{ cursor: 'pointer'  }} onClick={() => { sortPeople('email') }}>{emailHeader}</th>
+                        <th style={{ cursor: 'pointer', backgroundColor: 'LightGray'  }} onClick={() => { sortPeople('email') }}>{emailHeader}</th>
                         <th>Address</th>
                     </tr>
                     {
