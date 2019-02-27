@@ -16,7 +16,7 @@ class UserCreationForm extends Component {
     }
 
     createPerson = () => {
-        fetch('https://tech-test.azurewebsites.net/people', {
+        fetch(`${global.config.apiUrl}/people`, {
             method: 'POST',
             body: JSON.stringify(this.state),
             headers: {

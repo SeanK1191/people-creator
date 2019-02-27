@@ -57,7 +57,7 @@ class App extends Component {
     sortPeople = (sortBy) => {
         const sortDescending = this.state.sortedDescending === true ? false : true;
 
-        fetch(`https://tech-test.azurewebsites.net/people?sortBy=${sortBy}&sortDescending=${sortDescending}&skip=${this.state.skip}&take=${this.state.take}`, {
+        fetch(`${global.config.apiUrl}/people?sortBy=${sortBy}&sortDescending=${sortDescending}&skip=${this.state.skip}&take=${this.state.take}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -84,7 +84,7 @@ class App extends Component {
     pageForward = () => {
         const newSkip = this.state.skip + 10;
 
-        fetch(`https://tech-test.azurewebsites.net/people?sortBy=${this.state.sortedBy}&sortDescending=${this.state.sortedDescending}&skip=${newSkip}&take=${this.state.take}`, {
+        fetch(`${global.config.apiUrl}/people?sortBy=${this.state.sortedBy}&sortDescending=${this.state.sortedDescending}&skip=${newSkip}&take=${this.state.take}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -110,7 +110,7 @@ class App extends Component {
     pageBackward = () => {
         const newSkip = this.state.skip === 0 ? 0 : this.state.skip - 10;
 
-        fetch(`https://tech-test.azurewebsites.net/people?sortBy=${this.state.sortedBy}&sortDescending=${this.state.sortedDescending}&skip=${newSkip}&take=${this.state.take}`, {
+        fetch(`${global.config.apiUrl}/people?sortBy=${this.state.sortedBy}&sortDescending=${this.state.sortedDescending}&skip=${newSkip}&take=${this.state.take}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -134,7 +134,7 @@ class App extends Component {
     }
 
     deleteUser = (personId) => {
-        fetch(`https://tech-test.azurewebsites.net/people/${personId}`, {
+        fetch(`${global.config.apiUrl}/people/${personId}`, {
             method: 'DELETE'
         }).then((result) => {
             console.log(result);
